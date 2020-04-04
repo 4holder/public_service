@@ -1,7 +1,12 @@
 import { expect } from "chai";
+import { resolvers} from "../../src/resolvers";
 
 describe("Remove me", () => {
 	it("should pass", () => {
-		expect(true).equal(true);
+		expect(resolvers.Query.itWorks(
+			null,
+			null,
+			null
+		)).equal("Yes, it works!");
 	})
 });
