@@ -29,7 +29,8 @@
     "moment-timezone": "^0.5.27",
     "pg": "^7.18.1",
     "rambda": "^4.5.0",
-    "uuid": "^3.4.0"
+    "uuid": "^3.4.0",
+    "minimist": ">=0.2.1"
   },
   "devDependencies": {
     "@types/chai": "^4.2.9",
