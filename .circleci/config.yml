@@ -43,7 +43,8 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - gcp-cli/install_and_initialize_cli
+      - gcp-cli/install
+      - gcp-cli/initialize
       - run: |
           IMAGE_AND_TAG=gcr.io/fin2you/public-service:$CIRCLE_SHA1
           docker build -t $IMAGE_AND_TAG .
