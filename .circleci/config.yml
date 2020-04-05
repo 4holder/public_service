@@ -1,4 +1,8 @@
 version: 2.1
+
+orbs:
+  gcp-cli: circleci/gcp-cli@1.8.4
+
 jobs:
   run-tests:
     working_directory: ~/public_service
@@ -32,9 +36,19 @@ jobs:
           prefix: coverage
       - store_test_results:
           path: test-results
+  build-and-registry-container:
+    working_directory: ~/public_service
+    steps:
+      - checkout
+      - setup_remote_docker
+        docker_layer_caching: true
+      - run: |
+          TAG=CIRCLE_SHA1
+          docker build -t 4holder/public-service:$TAG .
 
 workflows:
   version: 2
   test-build-deploy:
     jobs:
       - run-tests
+      - build-and-registry-container
