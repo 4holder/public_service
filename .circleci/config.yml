@@ -50,10 +50,11 @@ jobs:
           docker build -t $IMAGE_AND_TAG .
           gcloud auth configure-docker
           docker push $IMAGE_AND_TAG
-  - deploy-to-production:
-      working_directory: ~/public_service
-      docker:
-          - image: circleci/node:10.16.3
+  deploy-to-production:
+    working_directory: ~/public_service
+    docker:
+      - image: circleci/node:10.16.3
+    steps:
       - gcp-cli/install
       - gcp-cli/initialize
       run: |
