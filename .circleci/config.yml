@@ -59,6 +59,7 @@ jobs:
       - gcp-cli/initialize
       - run: |
           gcloud components install kubectl
+          gcloud container clusters get-credentials 4holder-cluster-admin
           IMAGE_AND_TAG=gcr.io/fin2you/public-service:$CIRCLE_SHA1
           kubectl set image deployment/public-service-production public-service=$IMAGE_AND_TAG
 
