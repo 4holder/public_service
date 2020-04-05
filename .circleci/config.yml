@@ -57,10 +57,10 @@ jobs:
     steps:
       - gcp-cli/install
       - gcp-cli/initialize
-      run: |
-        gcloud components install kubectl
-        IMAGE_AND_TAG=gcr.io/fin2you/public-service:$CIRCLE_SHA1
-        kubectl set image deployment/public-service-production public-service=$IMAGE_AND_TAG
+      - run: |
+          gcloud components install kubectl
+          IMAGE_AND_TAG=gcr.io/fin2you/public-service:$CIRCLE_SHA1
+          kubectl set image deployment/public-service-production public-service=$IMAGE_AND_TAG
 
 workflows:
   version: 2
