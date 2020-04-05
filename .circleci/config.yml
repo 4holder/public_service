@@ -43,9 +43,12 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
+      - gcp-cli/install_and_initialize_cli
       - run: |
-          IMAGE_AND_TAG=4holder/public-service:$CIRCLE_SHA1
+          IMAGE_AND_TAG=gcr.io/fin2you/public-service:$CIRCLE_SHA1
           docker build -t $IMAGE_AND_TAG .
+          gcloud auth configure-docker
+          docker push $IMAGE_AND_TAG
 
 workflows:
   version: 2
