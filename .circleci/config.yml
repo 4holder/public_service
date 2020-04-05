@@ -44,12 +44,14 @@ jobs:
       - checkout
       - setup_remote_docker
       - run: |
-          TAG=CIRCLE_SHA1
-          docker build -t 4holder/public-service:$TAG .
+          IMAGE_AND_TAG=4holder/public-service:$CIRCLE_SHA1
+          docker build -t $IMAGE_AND_TAG .
 
 workflows:
   version: 2
   test-build-deploy:
     jobs:
       - run-tests
-      - build-and-registry-container
+      - build-and-registry-container:
+          requires:
+            - run-tests
