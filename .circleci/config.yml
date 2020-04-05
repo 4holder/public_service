@@ -38,6 +38,8 @@ jobs:
           path: test-results
   build-and-registry-container:
     working_directory: ~/public_service
+    docker:
+      - image: circleci/node:10.16.3
     steps:
       - checkout
       - setup_remote_docker:

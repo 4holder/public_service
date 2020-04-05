@@ -7,4 +7,15 @@ test-results.xml
 
 .idea
 
+#  Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# .tfvars files
+*.tfvars
+
+#Credentials file
 infra/credentials/account.json
