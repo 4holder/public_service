@@ -36,6 +36,16 @@ jobs:
           prefix: coverage
       - store_test_results:
           path: test-results
+  apply-infrastructure-changes:
+    working_directory: ~/public_service/infra
+    docker:
+      - image: hashicorp/terraform:light
+    steps:
+      - checkout
+      - run: |
+          echo $GCLOUD_SERVICE_KEY > credentials/account.json
+          terraform init -input=false
+          terraform apply -auto-approve
   build-and-registry-container:
     working_directory: ~/public_service
     docker:
@@ -58,8 +68,8 @@ jobs:
       - gcp-cli/install
       - gcp-cli/initialize
       - run: |
-          gcloud components install kubectl
-          gcloud container clusters get-credentials cluster-4holder-production
+          gcloud --quiet components install kubectl
+          gcloud --quiet container clusters get-credentials cluster-4holder-production
           IMAGE_AND_TAG=gcr.io/fin2you/public-service:$CIRCLE_SHA1
           kubectl set image deployment/public-service-production public-service=$IMAGE_AND_TAG
 
@@ -68,6 +78,9 @@ workflows:
   test-build-deploy:
     jobs:
       - run-tests
+      - apply-infrastructure-changes:
+          requires:
+            - run-tests
       - build-and-registry-container:
           requires:
             - run-tests
