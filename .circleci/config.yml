@@ -43,7 +43,7 @@ jobs:
     steps:
       - checkout
       - run: |
-          echo $GCLOUD_SERVICE_KEY > credentials/account.json
+          echo $GCLOUD_SERVICE_KEY > ~/public_service/infra/credentials/account.json
           terraform init -input=false
           terraform apply -auto-approve
   build-and-registry-container:
