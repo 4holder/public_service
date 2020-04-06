@@ -43,9 +43,7 @@ jobs:
     steps:
       - checkout
       - run: |
-          ls -lsa
-          touch credentials/account.json
-          ls -lsa credentials/
+          cd infra
           echo $GCLOUD_SERVICE_KEY > credentials/account.json
           terraform init -input=false
           terraform apply -auto-approve
