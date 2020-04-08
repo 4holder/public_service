@@ -13,7 +13,7 @@ services:
 
   db-migration-dev:
     image: boxfuse/flyway:5.2.4
-    command: -url=jdbc:postgresql://bff-service-db:5432/bff_service_local -schemas=core -user=postgres -password=postgres -connectRetries=60 migrate
+    command: -url=jdbc:postgresql://bff-service-db:5432/postgres -schemas=core -user=postgres -password=postgres -connectRetries=60 migrate
     volumes:
       - ./db/migrations:/flyway/sql
     depends_on:
@@ -21,7 +21,7 @@ services:
 
   db-migration-test:
     image: boxfuse/flyway:5.2.4
-    command: -url=jdbc:postgresql://bff-service-db:5432/bff_service_test -schemas=core -user=postgres -password=postgres -connectRetries=60 migrate
+    command: -url=jdbc:postgresql://bff-service-db:5432/postgres -schemas=core -user=postgres -password=postgres -connectRetries=60 migrate
     volumes:
       - ./db/migrations:/flyway/sql
     depends_on:

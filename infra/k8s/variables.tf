@@ -20,3 +20,9 @@ variable "replicas" {}
 variable "min_replicas" {}
 variable "max_replicas" {}
 variable "public_service_db" {}
+
+variable "database_name" {}
+variable "database_host" {}
+variable "database_port" {}
+variable "database_password" {}
+variable "database_user" {}

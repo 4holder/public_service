@@ -15,6 +15,12 @@ variable "max_replicas" { default = 2 }
 
 variable "default_public_service_container" { default = "gcr.io/fin2you/public-service:5f0034ff2f651822b514ddff314e5fc6d3b92e72" }
 
+variable "database_name" {}
+variable "database_host" {}
+variable "database_port" {}
+variable "database_password" {}
+variable "database_user" {}
+
 provider "google" {
   credentials = file("./credentials/account.json")
   project     = var.gcloud_project_id
@@ -59,4 +65,10 @@ module "public_service" {
 
   gcloud_sql_instance       = var.gcloud_sql_instance
   public_service_db         = module.public_service_db
+
+  database_name             = var.database_name
+  database_host             = var.database_host
+  database_port             = var.database_port
+  database_password         = var.database_password
+  database_user             = var.database_user
 }

@@ -60,7 +60,6 @@ resource "kubernetes_deployment" "public_service" {
       }
 
       spec {
-
         container {
           image = var.default_container
           name = "public-service"
@@ -68,6 +67,18 @@ resource "kubernetes_deployment" "public_service" {
           port {
             name = "api-http"
             container_port = 3000
+          }
+
+          env_from {
+            config_map_ref {
+              name = "public-api-service-config"
+            }
+          }
+
+          env_from {
+            secret_ref {
+              name = "public-api-service-secrets"
+            }
           }
 
           liveness_probe {
