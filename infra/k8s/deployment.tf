@@ -31,6 +31,8 @@ resource "kubernetes_service" "public_service_service" {
 }
 
 resource "kubernetes_deployment" "public_service" {
+  depends_on = [var.public_service_db]
+
   metadata {
     name = "public-service-${var.environment}"
     labels = {
@@ -58,14 +60,10 @@ resource "kubernetes_deployment" "public_service" {
       }
 
       spec {
+
         container {
           image = var.default_container
-          name  = "public-service"
-
-          port {
-            name = "api-https"
-            container_port = 3000
-          }
+          name = "public-service"
 
           port {
             name = "api-http"
@@ -97,22 +95,37 @@ resource "kubernetes_deployment" "public_service" {
             period_seconds = 30
             initial_delay_seconds = 30
           }
+        }
+        container {
+          name = "cloudsql-proxy"
+          image = "gcr.io/cloudsql-docker/gce-proxy:1.16"
+          command = [
+            "/cloud_sql_proxy",
+            "-instances=${var.gcloud_sql_instance}=tcp:5432",
+            "-credential_file=/secrets/cloudsql/fin2you-d46b88941098.json"
+          ]
 
-          resources{
-            limits{
-              cpu    = "100m"
-              memory = "1024Mi"
-            }
+          security_context {
+            run_as_user = 2
+            allow_privilege_escalation = false
+          }
 
-            requests{
-              cpu    = "25m"
-              memory = "256Mi"
-            }
+          volume_mount {
+            name = "cloudsql-instance-credentials"
+            mount_path = "/secrets/cloudsql"
+            read_only = true
+          }
+        }
+        volume {
+          name = "cloudsql-instance-credentials"
+          secret {
+            secret_name = "cloudsql-instance-credentials"
           }
         }
       }
     }
   }
+
 
   lifecycle {
     ignore_changes = [

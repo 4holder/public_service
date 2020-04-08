@@ -14,6 +14,9 @@ variable "k8s_username" {}
 variable "k8s_password" {}
 variable "k8s_namespace" { default = "default" }
 
+variable "gcloud_sql_instance" {}
+
 variable "replicas" {}
 variable "min_replicas" {}
 variable "max_replicas" {}
+variable "public_service_db" {}

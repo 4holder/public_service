@@ -7,12 +7,13 @@ variable "k8s_username" {}
 variable "k8s_password" {}
 variable "k8s_namespace" {}
 variable "cluster_name" {}
-
+variable "gcloud_sql_instance" {}
+variable "db_machine_type" { default = "db-f1-micro" }
 variable "replicas" { default = 1 }
 variable "min_replicas" { default = 1 }
 variable "max_replicas" { default = 2 }
 
-variable "default_public_service_container" { default = "gcr.io/fin2you/public-service:6153e7b54a69e71e74f6480c4b6bda0bd81f46f5" }
+variable "default_public_service_container" { default = "gcr.io/fin2you/public-service:5f0034ff2f651822b514ddff314e5fc6d3b92e72" }
 
 provider "google" {
   credentials = file("./credentials/account.json")
@@ -26,6 +27,13 @@ terraform {
     prefix      = "public_service_production.tfstate"
     credentials = "./credentials/account.json"
   }
+}
+module "public_service_db" {
+  source                    = "./db"
+  credentials_file          = var.credentials_file
+  gcloud_project_id         = var.gcloud_project_id
+  gcloud_region             = var.region
+  machine_type              = var.db_machine_type
 }
 
 module "public_service" {
@@ -48,4 +56,7 @@ module "public_service" {
   replicas                  = var.replicas
   min_replicas              = var.min_replicas
   max_replicas              = var.max_replicas
+
+  gcloud_sql_instance       = var.gcloud_sql_instance
+  public_service_db         = module.public_service_db
 }
