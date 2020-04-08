@@ -1,5 +1,21 @@
 const { env } = process;
 
+interface IConfiguration {
+  server: {
+    protocol: string;
+    host: string;
+    port: number;
+  };
+  database: {
+    host: string;
+    port: number;
+    database: string;
+    user: string;
+    password: string;
+    max: number;
+  };
+}
+
 const server = {
   protocol: "http",
   host: "0.0.0.0",
@@ -18,4 +34,4 @@ const database = {
 export default {
   server,
   database,
-};
+} as IConfiguration;
