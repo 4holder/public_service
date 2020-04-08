@@ -10,7 +10,9 @@ const startServer = async () => {
         resolvers,
     };
 
-    const dbPool = new Pool(config.database);
+    const { database } = config;
+
+    const dbPool = new Pool(database);
 
     const apolloServer = new ApolloServer(apolloConfig);
 
@@ -18,7 +20,7 @@ const startServer = async () => {
         await apolloServer.listen(config.server);
         const serverUrl = `${config.server.protocol}://${config.server.host}:${config.server.port}/`;
 
-        const databaseAddress = `${config.database.host}:${config.database.port}/${config.database.database}`;
+        const databaseAddress = `postgresql://${database.user}@${database.host}:${database.port}/${database.database}`;
 
         dbPool.query("SELECT 'DBD::Pg ping test'").then(_ =>
             console.log(`Properly connected to the database ${databaseAddress}.`)
