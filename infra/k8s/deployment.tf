@@ -112,8 +112,8 @@ resource "kubernetes_deployment" "public_service" {
           image = "gcr.io/cloudsql-docker/gce-proxy:1.16"
           command = [
             "/cloud_sql_proxy",
-            "-instances=${var.gcloud_sql_instance}=tcp:5432",
-            "-credential_file=/secrets/cloudsql/fin2you-d46b88941098.json"
+            "-instances=${var.gcloud_sql_instance}",
+            "-credential_file=/secrets/cloudsql/account.json"
           ]
 
           security_context {

@@ -13,7 +13,7 @@ variable "replicas" { default = 1 }
 variable "min_replicas" { default = 1 }
 variable "max_replicas" { default = 2 }
 
-variable "default_public_service_container" { default = "gcr.io/fin2you/public-service:5f0034ff2f651822b514ddff314e5fc6d3b92e72" }
+variable "default_public_service_container" { default = "gcr.io/fin2you/public-service:7f290d50de737272027673d4ba76a86e49064b04" }
 
 variable "database_name" {}
 variable "database_host" {}

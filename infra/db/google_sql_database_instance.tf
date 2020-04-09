@@ -12,8 +12,18 @@ resource "google_sql_database_instance" "user_portfolio_db" {
   settings {
     tier              = var.machine_type
     ip_configuration {
-      ipv4_enabled    = false
-      private_network = data.google_compute_network.default.self_link
+      ipv4_enabled    = true
+      private_network = "projects/fin2you/global/networks/for-holder-production-vpc-network"
+    }
+
+    maintenance_window {
+      day = 7
+      hour = 3
+    }
+
+    backup_configuration {
+      enabled = true
+      start_time = "01:00"
     }
   }
 }
