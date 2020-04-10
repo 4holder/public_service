@@ -2,8 +2,12 @@
 HOST=$1
 PORT=$2
 
-echo "Waiting for $HOST:$PORT"
+MESSAGE="Waiting for $HOST:$PORT"
+
+echo "$MESSAGE"
 
 while ! nc -z $HOST $PORT; do
-  sleep 0.1
+  sleep 1
+  cat ../nohup.out
+  echo "$MESSAGE"
 done
