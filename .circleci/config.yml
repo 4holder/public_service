@@ -47,16 +47,6 @@ jobs:
           echo $GCLOUD_SERVICE_KEY > credentials/account.json
           terraform init -input=false
           terraform apply -auto-approve
-  apply-database-migrations:
-    working_directory: ~/public_service
-    docker:
-      - image: circleci/golang:1.12
-    steps:
-      - checkout
-      - setup_remote_docker
-      - run: |
-          echo $GCLOUD_SERVICE_KEY > infra/credentials/account.json
-          ./bin/run-migrations.sh
   build-and-registry-container:
     working_directory: ~/public_service
     docker:
@@ -95,10 +85,6 @@ workflows:
       - build-and-registry-container:
           requires:
             - run-tests
-      - apply-database-migrations:
-          requires:
-            - run-tests
       - deploy-to-production:
           requires:
             - build-and-registry-container
-            - apply-database-migrations
