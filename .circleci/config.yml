@@ -51,14 +51,16 @@ jobs:
     working_directory: ~/public_service
     docker:
       - image: circleci/golang:1.12
-      steps:
-        - gcp-cli/install
-        - gcp-cli/initialize
-        - run: |
-            gcloud --quiet components install cloud_sql_proxy
-            nohup cloud_sql_proxy -instances=$TF_VAR_gcloud_sql_instance &
-            ./bin/wait_for.sh localhost 5432
-            ./bin/run-migrations.sh
+    steps:
+      - checkout
+      - setup_remote_docker
+      - gcp-cli/install
+      - gcp-cli/initialize
+      - run: |
+          gcloud --quiet components install cloud_sql_proxy
+          nohup cloud_sql_proxy -instances=$TF_VAR_gcloud_sql_instance &
+          ./bin/wait_for.sh localhost 5432
+          ./bin/run-migrations.sh
   build-and-registry-container:
     working_directory: ~/public_service
     docker:
