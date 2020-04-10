@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS users(
+CREATE TABLE IF NOT EXISTS public.users(
     id                    VARCHAR(37) NOT NULL,
     name                  VARCHAR NOT NULL,
     username              VARCHAR NOT NULL,

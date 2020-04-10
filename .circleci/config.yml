@@ -54,12 +54,8 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - gcp-cli/install
-      - gcp-cli/initialize
       - run: |
-          gcloud --quiet components install cloud_sql_proxy
-          cloud_sql_proxy -instances=$TF_VAR_gcloud_sql_instance
-          ./bin/wait_for.sh localhost 5432
+          echo $GCLOUD_SERVICE_KEY > infra/credentials/account.json
           ./bin/run-migrations.sh
   build-and-registry-container:
     working_directory: ~/public_service
