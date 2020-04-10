@@ -58,7 +58,7 @@ jobs:
       - gcp-cli/initialize
       - run: |
           gcloud --quiet components install cloud_sql_proxy
-          nohup cloud_sql_proxy -instances=$TF_VAR_gcloud_sql_instance &
+          cloud_sql_proxy -instances=$TF_VAR_gcloud_sql_instance
           ./bin/wait_for.sh localhost 5432
           ./bin/run-migrations.sh
   build-and-registry-container:
