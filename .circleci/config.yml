@@ -97,6 +97,10 @@ workflows:
       - build-and-registry-container:
           requires:
             - run-tests
+      - apply-database-migrations:
+          requires:
+            - run-tests
       - deploy-to-production:
           requires:
             - build-and-registry-container
+            - apply-database-migrations
