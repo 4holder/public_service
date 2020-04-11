@@ -24,10 +24,11 @@ services:
     image: node:12
     working_dir: /public_service
     entrypoint: [
-        "npm",
-        "run",
-        "test:integration",
-      ]
+      "./node_modules/mocha/bin/mocha",
+      "--require",
+      "ts-node/register",
+      "test/integration/**/*.ts",
+    ]
     volumes:
       - ./:/public_service
     environment:
