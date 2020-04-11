@@ -8,22 +8,12 @@ jobs:
     working_directory: ~/public_service
     docker:
       - image: circleci/node:10.16.3
-      - image: circleci/postgres:9.6.2-alpine
-        name: postgres
-        environment:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: postgres
     steps:
       - checkout
       - setup_remote_docker
       - run: |
-          docker run --rm -v migrations:/flyway/sql boxfuse/flyway:5.2.4 \
-            -url=jdbc:postgresql://postgres:5432/postgres \
-            -schemas=public \
-            -user=postgres \
-            -password=postgres \
-            -connectRetries=30 migrate
+          docker-compose up -d
+          ./bin/wait_for.sh public-api-db 5432
       - restore_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }}
       - run:
@@ -38,10 +28,10 @@ jobs:
           command: npm run test:unit
       - run:
           name: Integration Test
-          command: npm run test:integration
+          command: TEST_DB_HOST=public-api-db npm run test:integration
       - run:
           name: Code Coverage
-          command: npm run coverage
+          command: TEST_DB_HOST=public-api-db npm run coverage
       - run:
           name: Move Test Result
           command: mkdir -p test-results/mocha && cp test-results.xml test-results/mocha/results.xml

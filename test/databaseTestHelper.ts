@@ -4,9 +4,11 @@ import {UserDatabaseRow, UserDataSource} from "../src/user_profile/userDataSourc
 import { v4 as uuidv4 } from "uuid";
 import moment = require("moment-timezone");
 
+const { env } = process;
+
 const testDatabaseConfig = {
   user: "postgres",
-  host: "localhost",
+  host: env.TEST_DB_HOST || "localhost",
   database: "postgres",
   password: "postgres",
   port: 5432,
