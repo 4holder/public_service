@@ -24,6 +24,13 @@ jobs:
           key: dependency-cache-{{ checksum "package-lock.json" }}
           paths:
             - ./node_modules
+      - run: |
+          docker run --network host --rm -v migrations:/flyway/sql boxfuse/flyway:5.2.4 \
+            -url=jdbc:postgresql://localhost:5432/postgres \
+            -schemas=public \
+            -user=postgres \
+            -password=postgres \
+            -connectRetries=30 migrate
       - run:
           name: Unit Test
           command: npm run test:unit
