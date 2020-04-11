@@ -29,7 +29,7 @@ services:
         "test:integration",
       ]
     volumes:
-      - $PWD:/public_service
+      - ./:/public_service
     environment:
       TEST_DB_HOST: public-api-db
     depends_on:
