@@ -24,10 +24,8 @@ services:
     image: node:12
     working_dir: /public_service
     entrypoint: [
-      "./node_modules/mocha/bin/mocha",
-      "--require",
-      "ts-node/register",
-      "test/integration/**/*.ts",
+      "ls",
+      "-lsa",
     ]
     volumes:
       - ./:/public_service
