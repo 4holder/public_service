@@ -1,4 +1,29 @@
 const { env } = process;
+import dotenv from "dotenv";
+
+dotenv.config();
+
+export interface TokenConfig {
+  jwksUri: string;
+  audience: string;
+  issuer: string;
+  algorithms: string[]
+}
+
+export interface Auth0Configuration {
+  domain: string;
+  clientId: string;
+  clientSecret: string;
+}
+
+export interface IDatabaseConfig {
+  host: string;
+  port: number;
+  database: string;
+  user: string;
+  password: string;
+  max: number;
+}
 
 interface IConfiguration {
   server: {
@@ -6,14 +31,9 @@ interface IConfiguration {
     host: string;
     port: number;
   };
-  database: {
-    host: string;
-    port: number;
-    database: string;
-    user: string;
-    password: string;
-    max: number;
-  };
+  database: IDatabaseConfig;
+  auth0Configuration: Auth0Configuration;
+  tokenConfig: TokenConfig;
 }
 
 const server = {
@@ -31,7 +51,22 @@ const database = {
   max: 5,
 };
 
+const auth0Configuration = {
+  domain: env.AUTH0_DOMAIN,
+  clientId: env.AUTH0_CLIENTID,
+  clientSecret: env.AUTH0_CLIENTSECRET,
+};
+
+const tokenConfig = {
+  audience: env.TOKEN_AUDIENCE,
+  issuer: env.TOKEN_ISSUER,
+  algorithms: [env.TOKEN_ALGORITHM],
+  jwksUri: env.TOKEN_JWKSURI,
+};
+
 export default {
   server,
   database,
+  auth0Configuration,
+  tokenConfig,
 } as IConfiguration;

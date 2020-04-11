@@ -21,6 +21,14 @@ variable "database_port" {}
 variable "database_password" {}
 variable "database_user" {}
 
+variable "auth0_client_id" {}
+variable "auth0_client_secret" {}
+variable "auth0_domain" {}
+variable "token_algorithm" {}
+variable "token_audience" {}
+variable "token_issuer" {}
+variable "token_jwksuri" {}
+
 provider "google" {
   credentials = file("./credentials/account.json")
   project     = var.gcloud_project_id
@@ -71,4 +79,12 @@ module "public_service" {
   database_port             = var.database_port
   database_password         = var.database_password
   database_user             = var.database_user
+
+  auth0_client_id           = var.auth0_client_id
+  auth0_client_secret       = var.auth0_client_secret
+  auth0_domain              = var.auth0_domain
+  token_algorithm           = var.token_algorithm
+  token_audience            = var.token_audience
+  token_issuer              = var.token_issuer
+  token_jwksuri             = var.token_jwksuri
 }

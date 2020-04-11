@@ -26,3 +26,11 @@ variable "database_host" {}
 variable "database_port" {}
 variable "database_password" {}
 variable "database_user" {}
+
+variable "auth0_domain" {}
+variable "auth0_client_id" {}
+variable "auth0_client_secret" {}
+variable "token_audience" {}
+variable "token_issuer" {}
+variable "token_algorithm" {}
+variable "token_jwksuri" {}

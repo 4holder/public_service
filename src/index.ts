@@ -1,18 +1,35 @@
-import {typeDefs} from "./schema";
+import { typeDefs } from "./schema";
 import { resolvers } from "./resolvers";
-import {ApolloServer} from "apollo-server";
+import { ApolloServer } from "apollo-server";
 import config from "./config";
 import { Pool } from "pg";
+import { Auth0Client } from "./infrastructure/auth0Client";
+import { AppContext } from "./infrastructure/models";
+import { UserDataSource } from "./user_profile/userDataSource";
+import { authenticate } from "./infrastructure/auth";
 
 const startServer = async () => {
+    const { database, auth0Configuration } = config;
+
+    const dbPool = new Pool(database);
+    const auth0Client = new Auth0Client(auth0Configuration);
+    const userDataSource = new UserDataSource(dbPool);
+
     const apolloConfig = {
         typeDefs,
         resolvers,
+        context: ({ req }: any) => {
+            const bearer = req.headers.authorization || "";
+            const token = bearer.replace("Bearer ", "");
+            req.headers.Authorization = bearer;
+
+            return {
+                tokenData: authenticate(token, config.tokenConfig),
+                userDataSource,
+                auth0Client,
+            } as AppContext;
+        },
     };
-
-    const { database } = config;
-
-    const dbPool = new Pool(database);
 
     const apolloServer = new ApolloServer(apolloConfig);
 

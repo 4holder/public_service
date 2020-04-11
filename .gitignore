@@ -7,6 +7,8 @@ test-results.xml
 
 .idea
 
+.env
+
 #  Local .terraform directories
 **/.terraform/*
 
