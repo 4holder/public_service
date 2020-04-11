@@ -11,9 +11,6 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - run: |
-          docker-compose up -d
-          ./bin/wait_for.sh public-api-db 5432
       - restore_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }}
       - run:
@@ -28,10 +25,10 @@ jobs:
           command: npm run test:unit
       - run:
           name: Integration Test
-          command: TEST_DB_HOST=public-api-db npm run test:integration
+          command: docker-compose -f docker-compose-tests.yml up --exit-code-from run-tests run-tests
       - run:
           name: Code Coverage
-          command: TEST_DB_HOST=public-api-db npm run coverage
+          command: npm run coverage
       - run:
           name: Move Test Result
           command: mkdir -p test-results/mocha && cp test-results.xml test-results/mocha/results.xml

@@ -7,7 +7,7 @@
     "start": "npm run build && node .",
     "build": "tsc",
     "test": "NODE_ENV=test mocha --require ts-node/register -colors test/**/*.test.ts",
-    "test:with-report": "NODE_ENV=test mocha --reporter mocha-junit-reporter --require ts-node/register -colors test/**/*.test.ts",
+    "test:with-report": "NODE_ENV=test mocha --reporter mocha-junit-reporter --require ts-node/register -colors test/unit/**/*.test.ts",
     "test:unit": "NODE_ENV=test mocha --require ts-node/register -colors test/unit/**/*.test.ts",
     "test:integration": "NODE_ENV=test mocha --require ts-node/register -colors test/integration/**/*.test.ts",
     "coverage": "nyc --reporter=lcov --reporter=text npm run test:with-report"
