@@ -6,8 +6,6 @@ services:
     image: postgres
     ports:
       - 5432:5432
-    volumes:
-      - ./scripts/local-postgres-setup:/docker-entrypoint-initdb.d
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -16,7 +14,7 @@ services:
     image: boxfuse/flyway:5.2.4
     command: -url=jdbc:postgresql://public-api-db:5432/postgres -schemas=public -user=postgres -password=postgres -connectRetries=60 migrate
     volumes:
-      - ./migrations:/flyway/sql
+      - ~/public_service/migrations:/flyway/sql
     depends_on:
       - public-api-db
 
@@ -28,7 +26,7 @@ services:
       "-lsa",
     ]
     volumes:
-      - ./:/public_service
+      - ~/public_service:/public_service
     environment:
       TEST_DB_HOST: public-api-db
     depends_on:
