@@ -13,7 +13,7 @@ jobs:
       - setup_remote_docker
       - run: |
           docker-compose up -d
-          ./bin/wair_for.sh localhost 5432
+          ./bin/wait_for.sh localhost 5432
       - restore_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }}
       - run:
