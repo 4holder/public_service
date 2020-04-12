@@ -10,7 +10,6 @@ jobs:
       - image: circleci/node:10.16.3
     steps:
       - checkout
-      - setup_remote_docker
       - restore_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }}
       - run:
@@ -23,9 +22,6 @@ jobs:
       - run:
           name: Unit Test
           command: npm run test:unit
-      - run:
-          name: Integration Test
-          command: docker-compose -f docker-compose-tests.yml up --exit-code-from run-tests run-tests
       - run:
           name: Code Coverage
           command: npm run coverage

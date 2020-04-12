@@ -6,8 +6,6 @@ services:
     image: postgres
     ports:
       - 5432:5432
-    volumes:
-      - ./scripts/local-postgres-setup:/docker-entrypoint-initdb.d
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres

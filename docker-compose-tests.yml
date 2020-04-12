@@ -22,8 +22,9 @@ services:
     image: node:12
     working_dir: /public_service
     entrypoint: [
-      "ls",
-      "-lsa",
+      "npm",
+      "run",
+      "test:integration",
     ]
     volumes:
       - ~/public_service:/public_service
