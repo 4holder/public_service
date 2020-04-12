@@ -29,6 +29,8 @@ variable "token_audience" {}
 variable "token_issuer" {}
 variable "token_jwksuri" {}
 
+variable "subdomain" {}
+
 provider "google" {
   credentials = file("./credentials/account.json")
   project     = var.gcloud_project_id
@@ -42,6 +44,7 @@ terraform {
     credentials = "./credentials/account.json"
   }
 }
+
 module "public_service_db" {
   source                    = "./db"
   credentials_file          = var.credentials_file
@@ -87,4 +90,16 @@ module "public_service" {
   token_audience            = var.token_audience
   token_issuer              = var.token_issuer
   token_jwksuri             = var.token_jwksuri
+}
+
+module "public_service_dns" {
+  source                    = "./dns"
+  credentials_file          = var.credentials_file
+  gcloud_project_id         = var.gcloud_project_id
+  gcloud_region             = var.region
+
+  dns_name                  = data.terraform_remote_state.infra_production_state.outputs.dns_zone
+  load_balancer_ip          = module.public_service.load_balancer_ip
+  subdomain                 = var.subdomain
+  zone_name                 = data.terraform_remote_state.infra_production_state.outputs.zone_name
 }
