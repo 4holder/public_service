@@ -53,8 +53,8 @@ const database = {
 
 const auth0Configuration = {
   domain: env.AUTH0_DOMAIN,
-  clientId: env.AUTH0_CLIENTID,
-  clientSecret: env.AUTH0_CLIENTSECRET,
+  clientId: env.AUTH0_CLIENT_ID,
+  clientSecret: env.AUTH0_CLIENT_SECRET,
 };
 
 const tokenConfig = {
