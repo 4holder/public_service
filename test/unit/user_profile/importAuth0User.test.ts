@@ -42,6 +42,7 @@ describe("user_profile", () => {
     });
 
     it("should properly store user info when auth0 return user data", async () => {
+      stub(userDataSource, "getUserUserByExternalId").resolves(null);
       stub(auth0Client, "getUserInfo").resolves(expectedAuth0Response);
       const fakeQueryResult = {} as QueryResult;
       stub(userDataSource, "registerNewUser").resolves(fakeQueryResult);
