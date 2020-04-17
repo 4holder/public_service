@@ -2,6 +2,7 @@ import jwksClient, { CertSigningKey, JwksClient, RsaSigningKey, SigningKey } fro
 import jwt, { JwtHeader, SigningKeyCallback, VerifyOptions } from "jsonwebtoken";
 import { UserToken } from "./models";
 import { TokenConfig } from "../config";
+import { AuthenticationError } from "./AuthenticationError";
 
 const getKey = (client: JwksClient) => (
   header: JwtHeader,
@@ -38,7 +39,7 @@ export const authenticate = (
       options,
       (err, decoded) => {
         if (err) {
-          return reject(new Error(`A valid token is required. ${err}`));
+          return reject(new AuthenticationError(`A valid token is required.`));
         }
 
         return resolve(decoded as UserToken);

@@ -1,33 +1,31 @@
 import { AppContext } from "../infrastructure/models";
-import {retrieveAuth0UserProfile} from "./retrieveAuth0UserProfile";
-import {signup, SignupInput} from "./signup";
+import { importAuth0User } from "./importAuth0User";
+import { ApolloError } from "apollo-server";
+import { AuthenticationError } from "../infrastructure/AuthenticationError";
 
-export const userProfile = async (
+export const userProfileResolver = async (
   _: any,
   __: any,
   { userDataSource, tokenData }: AppContext,
 ) => {
-  const token = await tokenData;
+  return tokenData
+    .then(async (token) => {
+      return await userDataSource.getUserUserByExternalId(token.sub)
+    }).catch(e => {
+      if(e instanceof AuthenticationError) {
+        throw new ApolloError(e.message, "INVALID_TOKEN");
+      }
 
-  return userDataSource.getUserUserByExternalId(token.sub);
+      throw e;
+    });
 };
 
-export const userAuth0Profile = async (
+export const importAuth0UserResolver = async (
   _: any,
   __: any,
-  { auth0Client, tokenData }: AppContext,
-) => {
-  const token = await tokenData;
-
-  return retrieveAuth0UserProfile(token.sub, auth0Client);
-};
-
-export const signupUser = async (
-  _: any,
-  { input }: { input: SignupInput },
   { auth0Client, userDataSource, tokenData }: AppContext,
 ) => {
   const token = await tokenData;
 
-  return signup(token.sub, input, userDataSource, auth0Client);
+  return importAuth0User(token.sub, userDataSource, auth0Client);
 };

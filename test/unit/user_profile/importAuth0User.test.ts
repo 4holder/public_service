@@ -8,7 +8,7 @@ import sinon, { stub } from "sinon";
 import { Auth0Client, Auth0UserInfo } from "../../../src/infrastructure/auth0Client";
 import { Auth0Configuration } from "../../../src/config";
 import { Pool, QueryResult } from "pg";
-import { SignupInput, signup} from "../../../src/user_profile/signup";
+import { importAuth0User } from "../../../src/user_profile/importAuth0User";
 
 chai.use(sinonChai);
 
@@ -46,12 +46,6 @@ describe("user_profile", () => {
       const fakeQueryResult = {} as QueryResult;
       stub(userDataSource, "registerNewUser").resolves(fakeQueryResult);
 
-      const signupInput = {
-        cpf: "10000000001",
-        birthDate: moment().toDate(),
-        username: "another.username",
-      } as SignupInput;
-
       const expectedUserId = uuidv4();
 
       const expectedUserData = {
@@ -59,16 +53,14 @@ describe("user_profile", () => {
         firstName: expectedAuth0Response.given_name,
         lastName: expectedAuth0Response.family_name,
         email: expectedAuth0Response.email,
+        username: expectedAuth0Response.nickname,
         externalId: tokenSub,
-        username: signupInput.username,
-        cpf: parseInt(signupInput.cpf),
-        birthDate: signupInput.birthDate,
         picture: expectedAuth0Response.picture,
         createdAt: expectedAuth0Response.created_at,
         modifiedAt: expectedAuth0Response.updated_at,
       } as User;
 
-      await signup(tokenSub, signupInput, userDataSource, auth0Client, expectedUserId);
+      await importAuth0User(tokenSub, userDataSource, auth0Client, expectedUserId);
 
       expect(auth0Client.getUserInfo).to.be.calledWith(tokenSub);
       expect(userDataSource.registerNewUser).to.be.calledWith(expectedUserData);

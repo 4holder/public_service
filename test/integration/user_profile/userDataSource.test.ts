@@ -27,8 +27,6 @@ describe("user_profile", () => {
           username: "awesome.user",
           picture: "//beatiful.com/picutre.jpg",
           externalId: "google-oauth2|-90918938478278391828",
-          cpf: 10000000000,
-          birthDate: moment().subtract(20, 'year').toDate(),
           createdAt: moment().toDate(),
           modifiedAt: moment().toDate(),
         } as User;
@@ -46,8 +44,6 @@ describe("user_profile", () => {
           email: newUser.email,
           username: newUser.username,
           picture: newUser.picture,
-          cpf: newUser.cpf,
-          birth_date: newUser.birthDate,
           external_id: newUser.externalId,
           created_at: newUser.createdAt,
           modified_at: newUser.modifiedAt,
@@ -76,7 +72,6 @@ describe("user_profile", () => {
           firstName: userIWant.first_name,
           lastName: userIWant.last_name,
           externalId: userIWant.external_id,
-          birthDate: userIWant.birth_date,
           createdAt: userIWant.created_at,
           modifiedAt: userIWant.modified_at,
         } as User;

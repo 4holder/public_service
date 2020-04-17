@@ -1,15 +1,13 @@
 import {
-	signupUser,
-	userAuth0Profile,
-	userProfile
+	importAuth0UserResolver,
+	userProfileResolver
 } from './user_profile/resolvers';
 
 export const resolvers = {
 	Query: {
-		userProfile,
-		userAuth0Profile,
+		userProfile: userProfileResolver,
 	},
 	Mutation: {
-		signupUser,
+		importAuth0User: importAuth0UserResolver,
 	},
 };

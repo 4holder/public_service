@@ -6,8 +6,8 @@ export interface User {
   username: string;
   picture: string;
   externalId: string;
-  cpf: number;
-  birthDate: Date;
+  cpf?: number;
+  birthDate?: Date;
   createdAt: Date;
   modifiedAt: Date;
 }

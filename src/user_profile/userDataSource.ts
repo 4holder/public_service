@@ -11,8 +11,6 @@ export interface UserDatabaseRow {
   picture: string;
   locale: string;
   external_id: string;
-  birth_date: Date;
-  cpf: number;
   created_at: Date;
   modified_at: Date;
 }
@@ -35,10 +33,8 @@ export class UserDataSource extends DataSource {
 
       return {
         ...row,
-        cpf: parseInt(row.cpf.toString()),
         firstName: row.first_name,
         lastName: row.last_name,
-        birthDate: row.birth_date,
         createdAt: row.created_at,
         modifiedAt: row.modified_at,
         externalId: row.external_id
@@ -49,17 +45,15 @@ export class UserDataSource extends DataSource {
   async registerNewUser(user: User): Promise<QueryResult> {
     return this.dbClient.query(
       `INSERT INTO public.users
-            (id, first_name, last_name, username, email, cpf,
-             birth_date, created_at, modified_at, picture, external_id)
-            VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11);`,
+            (id, first_name, last_name, username, email,
+             created_at, modified_at, picture, external_id)
+            VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9);`,
       [
         user.id,
         user.firstName,
         user.lastName,
         user.username,
         user.email,
-        user.cpf,
-        user.birthDate,
         user.createdAt,
         user.modifiedAt,
         user.picture,
