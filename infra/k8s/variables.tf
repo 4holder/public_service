@@ -34,3 +34,6 @@ variable "token_audience" {}
 variable "token_issuer" {}
 variable "token_algorithm" {}
 variable "token_jwksuri" {}
+
+variable "ingress_ip_name" {}
+variable "managed_certificate_name" {}

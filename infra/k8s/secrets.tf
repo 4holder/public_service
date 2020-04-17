@@ -1,6 +1,6 @@
 resource "kubernetes_secret" "public_api_service_secrets" {
   metadata {
-    name              = "public-api-service-secrets"
+    name                = "public-api-service-secrets"
   }
 
   data = {

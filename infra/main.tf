@@ -30,6 +30,10 @@ variable "token_issuer" {}
 variable "token_jwksuri" {}
 
 variable "subdomain" {}
+variable certificate_name {}
+
+variable "global_static_ip_name" {}
+variable "load_balancer_ip" {}
 
 provider "google" {
   credentials = file("./credentials/account.json")
@@ -51,6 +55,16 @@ module "public_service_db" {
   gcloud_project_id         = var.gcloud_project_id
   gcloud_region             = var.region
   machine_type              = var.db_machine_type
+}
+
+module "public_service_certificate" {
+  source                    = "./managed_certificate"
+  credentials_file          = var.credentials_file
+  gcloud_project_id         = var.gcloud_project_id
+  gcloud_region             = var.region
+
+  certificate_name          = var.certificate_name
+  dns_name                  = "${var.subdomain}.${data.terraform_remote_state.infra_production_state.outputs.dns_zone}"
 }
 
 module "public_service" {
@@ -90,6 +104,10 @@ module "public_service" {
   token_audience            = var.token_audience
   token_issuer              = var.token_issuer
   token_jwksuri             = var.token_jwksuri
+
+
+  ingress_ip_name          = var.global_static_ip_name
+  managed_certificate_name = var.certificate_name
 }
 
 module "public_service_dns" {
@@ -99,7 +117,7 @@ module "public_service_dns" {
   gcloud_region             = var.region
 
   dns_name                  = data.terraform_remote_state.infra_production_state.outputs.dns_zone
-  load_balancer_ip          = module.public_service.load_balancer_ip
+  load_balancer_ip          = var.load_balancer_ip
   subdomain                 = var.subdomain
   zone_name                 = data.terraform_remote_state.infra_production_state.outputs.zone_name
 }

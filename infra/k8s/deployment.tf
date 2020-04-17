@@ -1,35 +1,3 @@
-resource "kubernetes_service" "public_service_service" {
-  metadata {
-    name = "public-service-service-${var.environment}"
-    labels = {
-      service = "public-service"
-    }
-  }
-
-  spec {
-    port {
-      name = "api-https"
-      protocol    = "TCP"
-      port        = 443
-      target_port = 3000
-    }
-
-    port {
-      name = "api-http"
-      protocol    = "TCP"
-      port        = 80
-      target_port = 3000
-    }
-
-    selector = {
-      environment = var.environment
-      service = "public-service"
-    }
-
-    type = "LoadBalancer"
-  }
-}
-
 resource "kubernetes_deployment" "public_service" {
   depends_on = [var.public_service_db]
 
@@ -136,7 +104,6 @@ resource "kubernetes_deployment" "public_service" {
       }
     }
   }
-
 
   lifecycle {
     ignore_changes = [
