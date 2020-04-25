@@ -29,6 +29,13 @@ const startServer = async () => {
                 auth0Client,
             } as AppContext;
         },
+        cors: {
+            origin: "*",
+            methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+            preflightContinue: false,
+            optionsSuccessStatus: 204,
+            credentials: true
+        },
     };
 
     const apolloServer = new ApolloServer(apolloConfig);
