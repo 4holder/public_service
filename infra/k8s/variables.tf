@@ -37,3 +37,5 @@ variable "token_jwksuri" {}
 
 variable "ingress_ip_name" {}
 variable "managed_certificate_name" {}
+
+variable "cash_flow_service_url" {}

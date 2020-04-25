@@ -8,7 +8,8 @@ variable "k8s_password" {}
 variable "k8s_namespace" {}
 variable "cluster_name" {}
 variable "gcloud_sql_instance" {}
-variable "db_machine_type" { default = "db-f1-micro" }
+variable "db_machine_type" {}
+
 variable "replicas" { default = 1 }
 variable "min_replicas" { default = 1 }
 variable "max_replicas" { default = 2 }
@@ -34,6 +35,8 @@ variable certificate_name {}
 
 variable "global_static_ip_name" {}
 variable "load_balancer_ip" {}
+
+variable "cash_flow_service_url" {}
 
 provider "google" {
   credentials = file("./credentials/account.json")
@@ -108,6 +111,8 @@ module "public_service" {
 
   ingress_ip_name          = var.global_static_ip_name
   managed_certificate_name = var.certificate_name
+
+  cash_flow_service_url    = var.cash_flow_service_url
 }
 
 module "public_service_dns" {
