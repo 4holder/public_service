@@ -22,3 +22,6 @@ test-results.xml
 
 #Credentials file
 infra/credentials/account.json
+
+# Mac
+.DS_Store
