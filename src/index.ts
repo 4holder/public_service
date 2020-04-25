@@ -10,12 +10,12 @@ import { authenticate } from "./infrastructure/auth";
 import { CashFlowDataSource } from "./income_management/CashFlowDataSource";
 
 const startServer = async () => {
-    const { database, auth0Configuration } = config;
+    const { database, auth0Configuration, cashFlowConfiguration } = config;
 
     const dbPool = new Pool(database);
     const auth0Client = new Auth0Client(auth0Configuration);
     const userDataSource = new UserDataSource(dbPool);
-    const cashFlowDataSource = new CashFlowDataSource(null);
+    const cashFlowDataSource = new CashFlowDataSource(cashFlowConfiguration);
 
     const apolloConfig = {
         typeDefs,

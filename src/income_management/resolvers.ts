@@ -19,7 +19,7 @@ export const baseCLTContractResolver = async (
 ) => {
   return tokenData
     .then( (_) => {
-      return cashFlowDataSource.caseculateBaseCLTContract(grossSalaryInCents, dependentsQuantity, deductionsInCents);
+      return cashFlowDataSource.calculateBaseCLTContract(grossSalaryInCents, dependentsQuantity, deductionsInCents);
     }).catch(e => {
       if(e instanceof AuthenticationError) {
         throw new ApolloError(e.message, "INVALID_TOKEN");
