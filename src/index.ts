@@ -7,6 +7,7 @@ import { Auth0Client } from "./infrastructure/auth0Client";
 import { AppContext } from "./infrastructure/models";
 import { UserDataSource } from "./user_profile/userDataSource";
 import { authenticate } from "./infrastructure/auth";
+import { CashFlowDataSource } from "./income_management/CashFlowDataSource";
 
 const startServer = async () => {
     const { database, auth0Configuration } = config;
@@ -14,6 +15,7 @@ const startServer = async () => {
     const dbPool = new Pool(database);
     const auth0Client = new Auth0Client(auth0Configuration);
     const userDataSource = new UserDataSource(dbPool);
+    const cashFlowDataSource = new CashFlowDataSource(null);
 
     const apolloConfig = {
         typeDefs,
@@ -26,6 +28,7 @@ const startServer = async () => {
             return {
                 tokenData: authenticate(token, config.tokenConfig),
                 userDataSource,
+                cashFlowDataSource,
                 auth0Client,
             } as AppContext;
         },
@@ -49,7 +52,7 @@ const startServer = async () => {
         dbPool.query("SELECT 'DBD::Pg ping test'").then(_ =>
             console.log(`Properly connected to the database ${databaseAddress}.`)
         ).catch(e => {
-            console.log(`Database connection error: ${e} - ${e.message}`);
+            console.error(`Database connection error: ${e} - ${e.message}`);
         });
 
         console.log(`Database is: ${databaseAddress}`);

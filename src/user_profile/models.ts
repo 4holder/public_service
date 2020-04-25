@@ -11,12 +11,3 @@ export interface User {
   createdAt: Date;
   modifiedAt: Date;
 }
-
-export interface Auth0User {
-  id: string;
-  givenName: string;
-  familyName: string;
-  email: string;
-  nickname: string;
-  picture: string;
-}

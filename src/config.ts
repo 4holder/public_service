@@ -16,6 +16,10 @@ export interface Auth0Configuration {
   clientSecret: string;
 }
 
+export interface CashFlowServiceConfiguration {
+  url: string;
+}
+
 export interface IDatabaseConfig {
   host: string;
   port: number;
@@ -33,6 +37,7 @@ interface IConfiguration {
   };
   database: IDatabaseConfig;
   auth0Configuration: Auth0Configuration;
+  cashFlowConfiguration: CashFlowServiceConfiguration;
   tokenConfig: TokenConfig;
 }
 
@@ -62,6 +67,10 @@ const tokenConfig = {
   issuer: env.TOKEN_ISSUER,
   algorithms: [env.TOKEN_ALGORITHM],
   jwksUri: env.TOKEN_JWKSURI,
+};
+
+const cashFlowConfiguration = {
+  url: env.CASH_FLOW_URL || "http://localhost:3001"
 };
 
 export default {
