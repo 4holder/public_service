@@ -70,12 +70,13 @@ const tokenConfig = {
 };
 
 const cashFlowConfiguration = {
-  url: env.CASH_FLOW_URL || "http://localhost:3001"
+  url: env.CASH_FLOW_SERVICE_URL || "http://localhost:3001"
 };
 
 export default {
   server,
   database,
   auth0Configuration,
+  cashFlowConfiguration,
   tokenConfig,
 } as IConfiguration;
