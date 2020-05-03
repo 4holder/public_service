@@ -66,7 +66,5 @@ export interface Discount {
 
 export interface BaseCLTContract {
   grossSalary: IDinero;
-  netSalary: Income;
-  thirteenthSalary: Income;
-  thirteenthSalaryAdvance: Income;
+  incomes: Income[];
 }

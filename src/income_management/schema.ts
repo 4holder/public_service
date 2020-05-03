@@ -62,8 +62,6 @@ type Discount {
 
 type BaseCLTContract {
   grossSalary: Money
-  netSalary: Income
-  thirteenthSalary: Income
-  thirteenthSalaryAdvance: Income
+  incomes: [Income]
 }
 `;
