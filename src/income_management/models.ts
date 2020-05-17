@@ -1,5 +1,8 @@
-import { Dinero as IDinero } from "dinero.js";
 
+export interface Amount {
+  valueInCents: number;
+  currency: string;
+}
 
 export enum ContractType {
   CLT = "CLT",
@@ -34,7 +37,7 @@ export enum IncomeType {
 export interface Income {
   id: string;
   name: string;
-  amount: IDinero;
+  amount: Amount;
   incomeType: IncomeType;
   occurrences: Occurrences;
   discounts: Discount[];
@@ -57,14 +60,14 @@ export interface Discount {
   incomeId: string;
   name: string;
   discountType: DiscountType;
-  amount: IDinero;
-  percentage: number;
+  amount: Amount;
+  grossAmountAliquot: number;
   occurrences: Occurrences;
   createdAt: Date;
   modifiedAt: Date;
 }
 
 export interface BaseCLTContract {
-  grossSalary: IDinero;
+  grossSalary: Amount;
   incomes: Income[];
 }

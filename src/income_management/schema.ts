@@ -10,9 +10,8 @@ enum Currency {
 }
 
 type Money {
-  amount: Int
+  valueInCents: Int
   currency: Currency
-  precision: Int
 }
 
 type Occurrences {
@@ -54,7 +53,7 @@ type Discount {
   name: String
   discountType: DiscountType
   amount: Money
-  percentage: Float
+  grossAmountAliquot: Float
   occurrences: Occurrences
   createdAt: Date
   modifiedAt: Date
