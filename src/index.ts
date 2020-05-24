@@ -15,7 +15,6 @@ const startServer = async () => {
     const dbPool = new Pool(database);
     const auth0Client = new Auth0Client(auth0Configuration);
     const userDataSource = new UserDataSource(dbPool);
-    const cashFlowDataSource = new CashFlowDataSource(cashFlowConfiguration);
 
     const apolloConfig = {
         typeDefs,
@@ -24,6 +23,8 @@ const startServer = async () => {
             const bearer = req.headers.authorization || "";
             const token = bearer.replace("Bearer ", "");
             req.headers.Authorization = bearer;
+
+            const cashFlowDataSource = new CashFlowDataSource(cashFlowConfiguration, token);
 
             return {
                 tokenData: authenticate(token, config.tokenConfig),

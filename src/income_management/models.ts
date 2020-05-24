@@ -9,15 +9,20 @@ export enum ContractType {
   Other = "OTHER",
 }
 
+export interface User {
+  id: string
+}
+
 export interface FinancialContract {
   id: string;
+  user: User;
   name: string;
   contractType: ContractType;
-  companyCnpj: string;
-  incomes: Income[],
-  isActive: boolean;
+  companyCnpj?: string;
+  grossAmount: Amount;
+  incomes: Income[];
   startDate: Date;
-  endDate: Date;
+  endDate?: Date;
   createdAt: Date;
   modifiedAt: Date;
 }

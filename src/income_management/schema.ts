@@ -1,15 +1,19 @@
 export const queries = `
 baseCLTContract(grossSalaryInCents: Int!, dependentsQuantity: Int!, deductionsInCents: Int!): BaseCLTContract
+getFinancialContracts(page: Int!, pageSize: Int!): [FinancialContract]!
 `;
 
-export const mutations = ``;
+export const mutations = `
+registerNewFinancialContract(input: NewFinancialContractInput): FinancialContract!
+`;
 
 export const types = `
 enum Currency {
   BRL
+  USD
 }
 
-type Money {
+type Amount {
   valueInCents: Int
   currency: Currency
 }
@@ -29,7 +33,7 @@ enum IncomeType {
 type Income {
   id: String
   name: String
-  amount: Money
+  amount: Amount
   incomeType: IncomeType
   occurrences: Occurrences
   discounts: [Discount]
@@ -52,7 +56,7 @@ type Discount {
   incomeId: String
   name: String
   discountType: DiscountType
-  amount: Money
+  amount: Amount
   grossAmountAliquot: Float
   occurrences: Occurrences
   createdAt: Date
@@ -60,7 +64,37 @@ type Discount {
 }
 
 type BaseCLTContract {
-  grossSalary: Money
+  grossSalary: Amount
   incomes: [Income]
+}
+
+enum ContractType {
+  CLT
+}
+
+type FinancialContract {
+  id: String
+  name: String
+  contractType: ContractType
+  companyCnpj: String
+  grossAmount: Amount
+  startDate: Date
+  endDate: Date
+  createdAt: Date
+  modifiedAt: Date
+}
+
+input AmountInput {
+  valueInCents: Int
+  currency: Currency
+}
+
+input NewFinancialContractInput {
+  name: String!
+  contractType: ContractType!
+  grossAmount: AmountInput!
+  companyCnpj: String
+  startDate: Date!
+  endDate: Date
 }
 `;
