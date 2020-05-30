@@ -1,4 +1,4 @@
-import {Amount, ContractType, Income} from "./models";
+import {Amount, ContractType} from "./models";
 
 export interface NewFinancialContractInput {
   name: string;

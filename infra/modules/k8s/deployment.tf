@@ -2,7 +2,7 @@ resource "kubernetes_deployment" "public_service" {
   depends_on = [var.public_service_db]
 
   metadata {
-    name = "public-service-${var.environment}"
+    name = "public-service"
     labels = {
       service = "public-service"
       environment = var.environment

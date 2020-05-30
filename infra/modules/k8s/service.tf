@@ -1,6 +1,6 @@
 resource "kubernetes_service" "public_service_service" {
   metadata {
-    name = "public-service-service-${var.environment}"
+    name = "public-service"
     labels = {
       service = "public-service"
     }

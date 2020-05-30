@@ -1,5 +1,5 @@
 variable "gcloud_project_id" { default = "fin2you" }
-variable "credentials_file" { default = "./credentials/account.json" }
+variable "credentials_file" { default = "../credentials/account.json" }
 
 variable "region" {}
 variable "environment" {}
@@ -10,9 +10,9 @@ variable "cluster_name" {}
 variable "gcloud_sql_instance" {}
 variable "db_machine_type" {}
 
-variable "replicas" { default = 1 }
-variable "min_replicas" { default = 1 }
-variable "max_replicas" { default = 2 }
+variable "replicas" { default = 2 }
+variable "min_replicas" { default = 2 }
+variable "max_replicas" { default = 5 }
 
 variable "default_public_service_container" { default = "gcr.io/fin2you/public-service:7f290d50de737272027673d4ba76a86e49064b04" }
 
@@ -39,7 +39,7 @@ variable "load_balancer_ip" {}
 variable "cash_flow_service_url" {}
 
 provider "google" {
-  credentials = file("./credentials/account.json")
+  credentials = file("../credentials/account.json")
   project     = var.gcloud_project_id
   region      = var.region
 }
@@ -48,12 +48,12 @@ terraform {
   backend "gcs" {
     bucket      = "public_service_production_terraform"
     prefix      = "public_service_production.tfstate"
-    credentials = "./credentials/account.json"
+    credentials = "../credentials/account.json"
   }
 }
 
 module "public_service_db" {
-  source                    = "./db"
+  source                    = "../modules/db"
   credentials_file          = var.credentials_file
   gcloud_project_id         = var.gcloud_project_id
   gcloud_region             = var.region
@@ -61,7 +61,7 @@ module "public_service_db" {
 }
 
 module "public_service_certificate" {
-  source                    = "./managed_certificate"
+  source                    = "../modules/managed_certificate"
   credentials_file          = var.credentials_file
   gcloud_project_id         = var.gcloud_project_id
   gcloud_region             = var.region
@@ -71,7 +71,7 @@ module "public_service_certificate" {
 }
 
 module "public_service" {
-  source                    = "./k8s"
+  source                    = "../modules/k8s"
   credentials_file          = var.credentials_file
   gcloud_project_id         = var.gcloud_project_id
   gcloud_region             = var.region
@@ -116,7 +116,7 @@ module "public_service" {
 }
 
 module "public_service_dns" {
-  source                    = "./dns"
+  source                    = "../modules/dns"
   credentials_file          = var.credentials_file
   gcloud_project_id         = var.gcloud_project_id
   gcloud_region             = var.region

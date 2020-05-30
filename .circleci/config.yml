@@ -61,7 +61,7 @@ jobs:
           gcloud --quiet components install kubectl
           gcloud --quiet container clusters get-credentials cluster-4holder-production
           IMAGE_AND_TAG=gcr.io/fin2you/public-service:$CIRCLE_SHA1
-          kubectl set image deployment/public-service-production public-service=$IMAGE_AND_TAG
+          kubectl set image deployment/public-service public-service=$IMAGE_AND_TAG
 
 workflows:
   version: 2
