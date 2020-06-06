@@ -49,6 +49,15 @@ resource "kubernetes_deployment" "public_service" {
             }
           }
 
+          resources {
+            limits {
+              cpu  = "200m"
+            }
+            requests {
+              cpu  = "50m"
+            }
+          }
+
           liveness_probe {
             http_get {
               scheme = "HTTP"
