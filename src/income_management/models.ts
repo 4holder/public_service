@@ -27,6 +27,14 @@ export interface FinancialContract {
   modifiedAt: Date;
 }
 
+export interface IncomeResume {
+  id: string;
+  name: string;
+  yearlyGrossIncome?: Amount;
+  yearlyNetIncome?: Amount;
+  yearlyIncomeDiscount?: Amount;
+}
+
 export interface Occurrences {
   day: number;
   months: number[];

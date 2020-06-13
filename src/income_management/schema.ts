@@ -1,6 +1,6 @@
 export const queries = `
 baseCLTContract(grossSalaryInCents: Int!, dependentsQuantity: Int!, deductionsInCents: Int!): BaseCLTContract
-getFinancialContracts(page: Int!, pageSize: Int!): [FinancialContract]!
+getIncomeResumes(page: Int!, pageSize: Int!): [IncomeResume]!
 `;
 
 export const mutations = `
@@ -82,6 +82,14 @@ type FinancialContract {
   endDate: Date
   createdAt: Date
   modifiedAt: Date
+}
+
+type IncomeResume {
+  id: String!
+  name: String
+  yearlyGrossIncome: Amount
+  yearlyNetIncome: Amount
+  yearlyIncomeDiscount: Amount
 }
 
 input AmountInput {

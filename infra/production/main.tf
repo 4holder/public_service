@@ -10,8 +10,8 @@ variable "cluster_name" {}
 variable "gcloud_sql_instance" {}
 variable "db_machine_type" {}
 
-variable "replicas" { default = 2 }
-variable "min_replicas" { default = 2 }
+variable "replicas" { default = 1 }
+variable "min_replicas" { default = 1 }
 variable "max_replicas" { default = 5 }
 
 variable "default_public_service_container" { default = "gcr.io/fin2you/public-service:7f290d50de737272027673d4ba76a86e49064b04" }

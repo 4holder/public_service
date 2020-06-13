@@ -4,7 +4,7 @@ import {
 } from './user_profile/resolvers';
 import {
 	baseCLTContractResolver,
-	getFinancialContractsResolver,
+	getIncomeResumesResolver,
 	registerNewFinancialContractResolver,
 } from "./income_management/resolvers";
 
@@ -12,7 +12,7 @@ export const resolvers = {
 	Query: {
 		userProfile: userProfileResolver,
 		baseCLTContract: baseCLTContractResolver,
-		getFinancialContracts: getFinancialContractsResolver,
+		getIncomeResumes: getIncomeResumesResolver,
 	},
 	Mutation: {
 		importAuth0User: importAuth0UserResolver,

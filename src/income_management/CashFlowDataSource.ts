@@ -1,5 +1,5 @@
 import { HTTPCache, RESTDataSource } from "apollo-datasource-rest";
-import {BaseCLTContract, FinancialContract} from "./models";
+import {BaseCLTContract, FinancialContract, IncomeResume} from "./models";
 import { CashFlowServiceConfiguration } from "../config";
 import {NewFinancialContractInput} from "./payloads";
 
@@ -35,9 +35,9 @@ export class CashFlowDataSource extends RESTDataSource {
     });
   }
 
-  async getFinancialContracts(page: number, pageSize: number): Promise<FinancialContract[]> {
+  async getIncomeResumes(page: number, pageSize: number): Promise<IncomeResume[]> {
     return this.get(
-      `/v1/financial_contracts`,
+      `/v1/listFinancialContracts`,
       {page, pageSize},
       {
         headers: {
@@ -45,8 +45,8 @@ export class CashFlowDataSource extends RESTDataSource {
           "Authorization": `Bearer ${this.token}`,
         }
       }
-    ).then(contracts => {
-      return contracts as FinancialContract[];
+    ).then(incomeResumes => {
+      return incomeResumes as IncomeResume[];
     })
   }
 

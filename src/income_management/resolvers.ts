@@ -30,14 +30,14 @@ export const baseCLTContractResolver = async (
     });
 };
 
-export const getFinancialContractsResolver = async (
+export const getIncomeResumesResolver = async (
   _: any,
   { page, pageSize }: {page: number, pageSize: number},
   { tokenData, cashFlowDataSource }: AppContext,
 ) => {
   return tokenData
     .then( (_) => {
-      return cashFlowDataSource.getFinancialContracts(page, pageSize);
+      return cashFlowDataSource.getIncomeResumes(page, pageSize);
     }).catch(e => {
       if(e instanceof AuthenticationError) {
         throw new ApolloError(e.message, "INVALID_TOKEN");
