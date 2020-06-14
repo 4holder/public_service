@@ -35,6 +35,17 @@ export interface IncomeResume {
   yearlyIncomeDiscount?: Amount;
 }
 
+export interface ProjectionPoint {
+  amount: Amount;
+  dateTime: Date;
+}
+
+export interface FinancialMovementsProjection {
+  label: string;
+  currency: string;
+  financialMovements: ProjectionPoint[];
+}
+
 export interface Occurrences {
   day: number;
   months: number[];

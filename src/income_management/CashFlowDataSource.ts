@@ -1,5 +1,5 @@
 import { HTTPCache, RESTDataSource } from "apollo-datasource-rest";
-import {BaseCLTContract, FinancialContract, IncomeResume} from "./models";
+import {BaseCLTContract, FinancialContract, FinancialMovementsProjection, IncomeResume} from "./models";
 import { CashFlowServiceConfiguration } from "../config";
 import {NewFinancialContractInput} from "./payloads";
 
@@ -47,6 +47,21 @@ export class CashFlowDataSource extends RESTDataSource {
       }
     ).then(incomeResumes => {
       return incomeResumes as IncomeResume[];
+    })
+  }
+
+  async getIncomeProjections(page: number, pageSize: number): Promise<FinancialMovementsProjection[]> {
+    return this.get(
+      `/v1/getYearlyIncomeProjections`,
+      {page, pageSize},
+      {
+        headers: {
+          "content-type": "application/json",
+          "Authorization": `Bearer ${this.token}`,
+        }
+      }
+    ).then(projections => {
+      return projections as FinancialMovementsProjection[];
     })
   }
 

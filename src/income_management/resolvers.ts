@@ -47,6 +47,23 @@ export const getIncomeResumesResolver = async (
     });
 };
 
+export const getIncomeProjectionsResolver = async (
+  _: any,
+  { page, pageSize }: {page: number, pageSize: number},
+  { tokenData, cashFlowDataSource }: AppContext,
+) => {
+  return tokenData
+    .then( (_) => {
+      return cashFlowDataSource.getIncomeProjections(page, pageSize);
+    }).catch(e => {
+      if(e instanceof AuthenticationError) {
+        throw new ApolloError(e.message, "INVALID_TOKEN");
+      }
+
+      throw e;
+    });
+};
+
 export const registerNewFinancialContractResolver = async (
   _: any,
   { input }: { input: NewFinancialContractInput },
