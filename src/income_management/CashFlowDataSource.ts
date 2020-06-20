@@ -67,7 +67,7 @@ export class CashFlowDataSource extends RESTDataSource {
 
   async registerNewFinancialContract(input: NewFinancialContractInput): Promise<FinancialContract> {
     return this.post(
-      `/v1/financial_contracts`,
+      `/v1/registerNewFinancialContract`,
       JSON.stringify(input),
       {
         headers: {

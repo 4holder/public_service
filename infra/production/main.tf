@@ -14,7 +14,7 @@ variable "replicas" { default = 1 }
 variable "min_replicas" { default = 1 }
 variable "max_replicas" { default = 5 }
 
-variable "default_public_service_container" { default = "gcr.io/fin2you/public-service:7f290d50de737272027673d4ba76a86e49064b04" }
+variable "default_public_service_container" { default = "gcr.io/fin2you/public-service:a47198a598446b7d4bd4b32d1ed1fa554933eee0" }
 
 variable "database_name" {}
 variable "database_host" {}
@@ -42,6 +42,10 @@ provider "google" {
   credentials = file("../credentials/account.json")
   project     = var.gcloud_project_id
   region      = var.region
+}
+
+locals {
+  gke_cluster_zone = "${var.region}-a"
 }
 
 terraform {
@@ -74,7 +78,7 @@ module "public_service" {
   source                    = "../modules/k8s"
   credentials_file          = var.credentials_file
   gcloud_project_id         = var.gcloud_project_id
-  gcloud_region             = var.region
+  gcloud_region             = local.gke_cluster_zone
 
   default_container         = var.default_public_service_container
   environment               = var.environment

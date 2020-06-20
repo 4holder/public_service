@@ -54,12 +54,9 @@ enum DiscountType {
 
 type Discount {
   id: String
-  incomeId: String
   name: String
   discountType: DiscountType
   amount: Amount
-  grossAmountAliquot: Float
-  occurrences: Occurrences
   createdAt: Date
   modifiedAt: Date
 }
@@ -78,9 +75,9 @@ type FinancialContract {
   name: String
   contractType: ContractType
   companyCnpj: String
-  grossAmount: Amount
   startDate: Date
   endDate: Date
+  incomes: [Income]
   createdAt: Date
   modifiedAt: Date
 }
@@ -104,17 +101,36 @@ type FinancialMovementsProjection {
   financialMovements: [ProjectionPoint]
 }
 
+input OccurrencesInput {
+  day: Int
+  months: [Int]
+}
+
 input AmountInput {
   valueInCents: Int
   currency: Currency
 }
 
+input NewIncomeDiscountInput {
+  name: String
+  discountType: DiscountType
+  amount: AmountInput
+}
+
+input NewIncomeInput {
+  name: String
+  amount: AmountInput
+  incomeType: IncomeType
+  occurrences: OccurrencesInput
+  discounts: [NewIncomeDiscountInput]
+}
+
 input NewFinancialContractInput {
   name: String!
   contractType: ContractType!
-  grossAmount: AmountInput!
   companyCnpj: String
   startDate: Date!
   endDate: Date
+  incomes: [NewIncomeInput]
 }
 `;

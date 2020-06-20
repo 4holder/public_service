@@ -81,12 +81,9 @@ export enum DiscountType {
 
 export interface Discount {
   id: string;
-  incomeId: string;
   name: string;
   discountType: DiscountType;
   amount: Amount;
-  grossAmountAliquot: number;
-  occurrences: Occurrences;
   createdAt: Date;
   modifiedAt: Date;
 }
