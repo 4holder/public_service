@@ -6,6 +6,7 @@ getIncomeProjections(page: Int!, pageSize: Int!): [FinancialMovementsProjection]
 
 export const mutations = `
 registerNewFinancialContract(input: NewFinancialContractInput): FinancialContract!
+removeFinancialContract(id: String!): RemoveContractResponse
 `;
 
 export const types = `
@@ -132,5 +133,10 @@ input NewFinancialContractInput {
   startDate: Date!
   endDate: Date
   incomes: [NewIncomeInput]
+}
+
+type RemoveContractResponse {
+  success: Boolean
+  message: String
 }
 `;

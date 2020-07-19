@@ -7,6 +7,7 @@ import {
 	getIncomeResumesResolver,
 	registerNewFinancialContractResolver,
 	getIncomeProjectionsResolver,
+	removeFinancialContractResolver,
 } from "./income_management/resolvers";
 
 export const resolvers = {
@@ -19,5 +20,6 @@ export const resolvers = {
 	Mutation: {
 		importAuth0User: importAuth0UserResolver,
 		registerNewFinancialContract: registerNewFinancialContractResolver,
+		removeFinancialContract: removeFinancialContractResolver,
 	},
 };

@@ -40,10 +40,7 @@ export class CashFlowDataSource extends RESTDataSource {
       `/v1/listFinancialContracts`,
       {page, pageSize},
       {
-        headers: {
-          "content-type": "application/json",
-          "Authorization": `Bearer ${this.token}`,
-        }
+        headers: this.getHeaders(),
       }
     ).then(incomeResumes => {
       return incomeResumes as IncomeResume[];
@@ -55,10 +52,7 @@ export class CashFlowDataSource extends RESTDataSource {
       `/v1/getYearlyIncomeProjections`,
       {page, pageSize},
       {
-        headers: {
-          "content-type": "application/json",
-          "Authorization": `Bearer ${this.token}`,
-        }
+        headers: this.getHeaders(),
       }
     ).then(projections => {
       return projections as FinancialMovementsProjection[];
@@ -70,11 +64,25 @@ export class CashFlowDataSource extends RESTDataSource {
       `/v1/registerNewFinancialContract`,
       JSON.stringify(input),
       {
-        headers: {
-          "content-type": "application/json",
-          "Authorization": `Bearer ${this.token}`,
-        },
+        headers: this.getHeaders(),
       })
       .then(financialContract => financialContract as FinancialContract);
+  }
+
+  async removeFinancialContract(id: string): Promise<any> {
+    return this.delete(
+      `/v1/financialContract/${id}`,
+      {},
+      {
+        headers: this.getHeaders(),
+      }
+    )
+  }
+
+  private getHeaders() {
+    return {
+      "content-type": "application/json",
+      "Authorization": `Bearer ${this.token}`,
+    };
   }
 }

@@ -1,7 +1,7 @@
 import { ApolloError } from "apollo-server";
 import { AppContext } from "../infrastructure/models";
 import { AuthenticationError } from "../infrastructure/AuthenticationError";
-import {NewFinancialContractInput} from "./payloads";
+import { NewFinancialContractInput } from "./payloads";
 
 interface BaseCLTContractInput {
  grossSalaryInCents: number;
@@ -74,6 +74,25 @@ export const registerNewFinancialContractResolver = async (
       const financialContract = await cashFlowDataSource.registerNewFinancialContract(input);
       return financialContract;
     }).catch(e => {
+      if(e instanceof AuthenticationError) {
+        throw new ApolloError(e.message, "INVALID_TOKEN");
+      }
+
+      throw e;
+    });
+};
+
+export const removeFinancialContractResolver = async (
+  _: any,
+  { id }: { id: string },
+  { tokenData, cashFlowDataSource }: AppContext,
+) => {
+  return tokenData
+    .then( (_) =>
+      cashFlowDataSource
+        .removeFinancialContract(id)
+        .then(_ => ({ success: true, message: "Contract was removed." }))
+    ).catch(e => {
       if(e instanceof AuthenticationError) {
         throw new ApolloError(e.message, "INVALID_TOKEN");
       }
