@@ -2,6 +2,7 @@ export const queries = `
 baseCLTContract(grossSalaryInCents: Int!, dependentsQuantity: Int!, deductionsInCents: Int!): BaseCLTContract
 getIncomeResumes(page: Int!, pageSize: Int!): [IncomeResume]!
 getIncomeProjections(page: Int!, pageSize: Int!): [FinancialMovementsProjection]!
+getFinancialContractDetails(id: String!): DetailedFinancialContract!
 `;
 
 export const mutations = `
@@ -138,5 +139,41 @@ input NewFinancialContractInput {
 type RemoveContractResponse {
   success: Boolean
   message: String
+}
+
+type DetailedIncomeDiscount {
+  id: String
+  name: String
+  discountType: String
+  amount: Amount
+  createdAt: Date
+  modifiedAt: Date
+}
+
+type DetailedIncome {
+  id: String
+  name: String
+  grossAmount: Amount
+  netAmount: Amount
+  incomeType: String
+  occurrences: Occurrences
+  discounts: [DetailedIncomeDiscount]
+  createdAt: Date
+  modifiedAt: Date
+}
+
+type DetailedFinancialContract {
+  id: String
+  name: String
+  contractType: String
+  companyCnpj: String
+  incomes: [DetailedIncome]
+  totalYearlyGrossAmount: Amount
+  totalYearlyNetAmount: Amount
+  totalYearlyDiscountAmount: Amount
+  startDate: Date
+  endDate: Date
+  createdAt: Date
+  modifiedAt: Date
 }
 `;

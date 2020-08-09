@@ -64,6 +64,23 @@ export const getIncomeProjectionsResolver = async (
     });
 };
 
+export const getFinancialContractDetailsResolver = async (
+  _: any,
+  { id }: {id: string},
+  { tokenData, cashFlowDataSource }: AppContext,
+) => {
+  return tokenData
+    .then( (_) => {
+      return cashFlowDataSource.getFinancialContractDetails(id);
+    }).catch(e => {
+      if(e instanceof AuthenticationError) {
+        throw new ApolloError(e.message, "INVALID_TOKEN");
+      }
+
+      throw e;
+    });
+};
+
 export const registerNewFinancialContractResolver = async (
   _: any,
   { input }: { input: NewFinancialContractInput },

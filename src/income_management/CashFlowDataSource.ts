@@ -1,5 +1,11 @@
 import { HTTPCache, RESTDataSource } from "apollo-datasource-rest";
-import {BaseCLTContract, FinancialContract, FinancialMovementsProjection, IncomeResume} from "./models";
+import {
+  BaseCLTContract,
+  DetailedFinancialContract,
+  FinancialContract,
+  FinancialMovementsProjection,
+  IncomeResume
+} from "./models";
 import { CashFlowServiceConfiguration } from "../config";
 import {NewFinancialContractInput} from "./payloads";
 
@@ -56,6 +62,18 @@ export class CashFlowDataSource extends RESTDataSource {
       }
     ).then(projections => {
       return projections as FinancialMovementsProjection[];
+    })
+  }
+
+  async getFinancialContractDetails(id: string): Promise<DetailedFinancialContract[]> {
+    return this.get(
+      `/v1/detailedFinancialContract/${id}`,
+      {},
+      {
+        headers: this.getHeaders(),
+      }
+    ).then(contract => {
+      return contract as DetailedFinancialContract[];
     })
   }
 

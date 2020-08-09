@@ -5,6 +5,7 @@ import {
 import {
 	baseCLTContractResolver,
 	getIncomeResumesResolver,
+	getFinancialContractDetailsResolver,
 	registerNewFinancialContractResolver,
 	getIncomeProjectionsResolver,
 	removeFinancialContractResolver,
@@ -16,6 +17,7 @@ export const resolvers = {
 		baseCLTContract: baseCLTContractResolver,
 		getIncomeResumes: getIncomeResumesResolver,
 		getIncomeProjections: getIncomeProjectionsResolver,
+		getFinancialContractDetails: getFinancialContractDetailsResolver,
 	},
 	Mutation: {
 		importAuth0User: importAuth0UserResolver,
