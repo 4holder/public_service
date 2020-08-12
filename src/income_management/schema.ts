@@ -31,6 +31,7 @@ enum IncomeType {
   THIRTEENTH_SALARY
   THIRTEENTH_SALARY_ADVANCE
   PROFIT_SHARING
+  OTHER
 }
 
 type Income {

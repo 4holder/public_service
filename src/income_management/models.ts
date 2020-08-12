@@ -56,6 +56,7 @@ export enum IncomeType {
   ThirteenthSalary = "THIRTEENTH_SALARY",
   ThirteenthSalaryAdvance = "THIRTEENTH_SALARY_ADVANCE",
   ProfitSharing = "PROFIT_SHARING",
+  OTHER = "OTHER",
 }
 
 export interface Income {
